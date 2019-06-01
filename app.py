@@ -3,34 +3,24 @@ import sys
 import time
 import os
 from flask import Flask, render_template, flash, redirect
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.fields.html5 import EmailField
-from wtforms.validators import DataRequired, Email, IPAddress, Optional
-
+from forms import ConfigForm, DeviceConfigForm
+from set_config import set_config_value
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
 
-class LoginForm(FlaskForm):
-    ssid = StringField('Network Name', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    email = EmailField('Email address', validators=[DataRequired(), Email()])
-    ip_address = StringField('Server IP address', validators=[Optional(), IPAddress()])
-    submit = SubmitField('Submit')
-
-
 @app.route('/', methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
+def config_page():
+    form = ConfigForm()
     if form.validate_on_submit():
         flash('requested for user {}, {}'.format(
             form.ssid.data, form.email.data))
         print(form.ssid.data, form.email.data, form.ip_address.data)
         ssid = form.ssid.data
         password = form.password.data
-        wifi_connect(ssid, password)
-        sys.exit(0)
+        if on_raspi:
+            wifi_connect(ssid, password)
+            sys.exit(0)
         return redirect('/')
     else:
         for field, error in form.errors.items():
@@ -38,11 +28,28 @@ def login():
     return render_template('config.html', title='config', form=form)
 
 
+@app.route('/dev', methods=['GET', 'POST'])
+def dev_config_page():
+    form = DeviceConfigForm()
+    if form.validate_on_submit():
+        if form.measurements_count.data:
+            set_config_value('min_measurements_count', form.measurements_count.data)
+            flash('config value was set')
+            return redirect('/')
+    else:
+        print('kek')
+    return render_template('dev_config.html', title='dev-config', form=form)
+
+
 def wifi_connect(ssid, password):
     subprocess.run(f'./wifi_connection.sh {ssid} {password}', shell=True)
 
 
 if __name__ == '__main__':
-    subprocess.Popen('sudo ./start_hotspot.sh', shell=True)
-    time.sleep(10)
-    app.run(host='192.168.0.10')
+    on_raspi = False
+    if on_raspi:
+        subprocess.Popen('sudo ./start_hotspot.sh', shell=True)
+        time.sleep(10)
+        app.run(host='192.168.0.10')
+    else:
+        app.run()
