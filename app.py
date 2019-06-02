@@ -1,10 +1,11 @@
-import subprocess
 import sys
 import time
 import os
 from flask import Flask, render_template, flash, redirect
 from forms import ConfigForm, DeviceConfigForm
-from set_config import set_config_value
+from utlis import set_config_value
+from utlis import wifi_connect
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
@@ -37,12 +38,9 @@ def dev_config_page():
             flash('config value was set')
             return redirect('/')
     else:
-        print('kek')
+        for field, error in form.errors.items():
+            flash(f'Troubles with field {getattr(form, field).label.text}: {" ".join(error)}')
     return render_template('dev_config.html', title='dev-config', form=form)
-
-
-def wifi_connect(ssid, password):
-    subprocess.run(f'./wifi_connection.sh {ssid} {password}', shell=True)
 
 
 if __name__ == '__main__':
