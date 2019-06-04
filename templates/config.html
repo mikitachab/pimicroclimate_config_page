@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Configure Climate Monitor</h1>
+    <h2>Configure Climate Monitor</h2>
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <p>
@@ -16,12 +16,12 @@
             {{ form.email.label }}<br>
             {{ form.email(size=32) }}
         </p>
-    	<p>
-    	    {{ form.ip_address.label }}<br>
-    	    {{ form.ip_address(size=32) }}
-    	</p>
-        <p>{{ form.submit() }}</p>
+        <p>
+            {{ form.ip_address.label }}<br>
+            {{ form.ip_address(size=32) }}
+        </p>
+        <p>{{ form.submit(class="butn") }}</p>
     </form>
-    <a href="{{ url_for('dev_config_page') }}">Device Configuration Page</a>
+    <hr>
+    <a class = "href_main_config" href="{{ url_for('dev_config_page') }}">Device Configuration Page</a>
 {% endblock %}
-

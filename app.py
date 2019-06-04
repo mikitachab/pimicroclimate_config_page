@@ -35,8 +35,12 @@ def dev_config_page():
     if form.validate_on_submit():
         if form.measurements_count.data:
             set_config_value('min_measurements_count', form.measurements_count.data)
-            flash('config value was set')
-            return redirect('/')
+        if form.measurement_interval.data:
+            set_config_value('default_sleep_time', form.measurement_interval.data)
+        if form.status_mail_time.data:
+            set_config_value('notification_time', str(form.status_mail_time.data))
+        flash('config value was set')
+        return redirect('/')
     else:
         for field, error in form.errors.items():
             flash(f'Troubles with field {getattr(form, field).label.text}: {" ".join(error)}')

@@ -1,0 +1,50 @@
+
+body {
+  color: #1A2E3A;
+  text-align: center;
+  background-color: #EEFEEE;
+}
+
+h1 {
+  margin-top: 5px ;
+  margin-bottom: 2px
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 1.3rem;
+}
+
+
+hr {
+  border: dotted #00334e; 6px;
+  border-bottom: none;
+  width: 15%;
+  margin: 5px auto;
+}
+
+.butn {
+  border-radius: 2px;
+  color: #1A2E3A;
+  font-size: 25px;
+  padding: 6px 18px 10px 20px;
+  text-decoration: none;
+  margin: 10px auto 5px;
+  width: 250px;
+  height: 40px;
+}
+
+.form_dev_config {
+  width: 60px;
+}
+
+
+.href_main_config {
+  font-size: 20px;
+  text-decoration: none;
+  color: #1A2E3A;
+}
+
+.href_main_config:hover {
+  color:#99824E;
+}

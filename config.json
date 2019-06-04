@@ -1,4 +1,6 @@
 {
   "kek": 1,
-  "min_measurements_count": 4
+  "min_measurements_count": 6,
+  "default_sleep_time": 4,
+  "notification_time": "12:22:00"
 }
