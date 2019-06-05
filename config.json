@@ -2,5 +2,13 @@
   "kek": 1,
   "min_measurements_count": 6,
   "default_sleep_time": 4,
-  "notification_time": "12:22:00"
+  "notification_time": "12:22:00",
+  "recivers_emails": [
+    "kek",
+    "lol",
+    "mikit",
+    "kkkk",
+    "some",
+    "another"
+  ]
 }

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>Configure Monitor Device</h1>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.emails.label (class="form_dev_config")}}<br>
+            {{ form.emails(size=20) }}
+        </p>
+        <p>{{ form.submit(class="butn") }}</p>
+    </form>
+    <a class = "href_main_config" href="{{ url_for('config_page') }}">Main Configuration Page</a>
+
+{% endblock %}
+
+
+
+

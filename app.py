@@ -2,8 +2,8 @@ import sys
 import time
 import os
 from flask import Flask, render_template, flash, redirect
-from forms import ConfigForm, DeviceConfigForm
-from utlis import set_config_value
+from forms import ConfigForm, DeviceConfigForm, EmailsForm
+from utlis import set_config_value, udpate_emails_list
 from utlis import wifi_connect
 
 app = Flask(__name__)
@@ -45,6 +45,18 @@ def dev_config_page():
         for field, error in form.errors.items():
             flash(f'Troubles with field {getattr(form, field).label.text}: {" ".join(error)}')
     return render_template('dev_config.html', title='dev-config', form=form)
+
+
+@app.route('/mails', methods=['GET', 'POST'])
+def multiple_mails():
+    form = EmailsForm()
+    if form.validate_on_submit():
+        if form.emails.data:
+            emails = form.emails.data
+            udpate_emails_list(emails)
+            flash('emails updated')
+            return redirect('/mails')
+    return render_template('emails.html', title='emails config', form=form)
 
 
 if __name__ == '__main__':

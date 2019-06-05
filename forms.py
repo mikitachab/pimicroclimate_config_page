@@ -17,3 +17,8 @@ class DeviceConfigForm(FlaskForm):
     measurement_interval = IntegerField('Measurements Interval', validators=[Optional()])
     status_mail_time = TimeField('Status Email Time', validators=[Optional()])
     submit = SubmitField('Submit')
+
+
+class EmailsForm(FlaskForm):
+    emails = StringField('Emails', validators=[Optional(), ])
+    submit = SubmitField('Submit')
