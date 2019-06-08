@@ -42,5 +42,13 @@ def udpate_emails_list(emails):
             flash(f'invalid email: "{email}"')
 
 
+def config_delete_mail(index):
+    mails = get_config_value('recivers_emails')
+    mail = mails[index]
+    del mails[index]
+    flash(f'email {mail} deleted')
+    set_config_value('recivers_emails', mails)
+
+
 def wifi_connect(ssid, password):
     subprocess.run(f'./wifi_connection.sh {ssid} {password}', shell=True)

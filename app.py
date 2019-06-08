@@ -3,8 +3,11 @@ import time
 import os
 from flask import Flask, render_template, flash, redirect
 from forms import ConfigForm, DeviceConfigForm, EmailsForm
-from utlis import set_config_value, udpate_emails_list, get_config_value
-from utlis import wifi_connect
+from utils import set_config_value
+from utils import udpate_emails_list
+from utils import get_config_value
+from utils import config_delete_mail
+from utils import wifi_connect
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
@@ -58,6 +61,12 @@ def multiple_mails():
             udpate_emails_list(emails)
             return redirect('/mails')
     return render_template('emails.html', title='emails config', form=form, cemails=current_emails)
+
+
+@app.route('/mails/delete/<int:index>')
+def delete_mail(index):
+    config_delete_mail(index)
+    return redirect('/mails')
 
 
 if __name__ == '__main__':
