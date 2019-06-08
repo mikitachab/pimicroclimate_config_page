@@ -20,5 +20,5 @@ class DeviceConfigForm(FlaskForm):
 
 
 class EmailsForm(FlaskForm):
-    emails = StringField('Emails', validators=[Optional(), ])
+    emails = StringField('New Emails', validators=[Optional(), ])
     submit = SubmitField('Submit')

@@ -3,7 +3,7 @@ import time
 import os
 from flask import Flask, render_template, flash, redirect
 from forms import ConfigForm, DeviceConfigForm, EmailsForm
-from utlis import set_config_value, udpate_emails_list
+from utlis import set_config_value, udpate_emails_list, get_config_value
 from utlis import wifi_connect
 
 app = Flask(__name__)
@@ -49,14 +49,15 @@ def dev_config_page():
 
 @app.route('/mails', methods=['GET', 'POST'])
 def multiple_mails():
+    current_emails = get_config_value('recivers_emails')
+    print(current_emails)
     form = EmailsForm()
     if form.validate_on_submit():
         if form.emails.data:
             emails = form.emails.data
             udpate_emails_list(emails)
-            flash('emails updated')
             return redirect('/mails')
-    return render_template('emails.html', title='emails config', form=form)
+    return render_template('emails.html', title='emails config', form=form, cemails=current_emails)
 
 
 if __name__ == '__main__':

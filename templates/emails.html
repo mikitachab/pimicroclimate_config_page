@@ -3,14 +3,24 @@
 {% block content %}
 
     <h1>Configure Monitor Device</h1>
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.emails.label (class="form_dev_config")}}<br>
-            {{ form.emails(size=20) }}
-        </p>
-        <p>{{ form.submit(class="butn") }}</p>
-    </form>
+    <div>
+        <h3>Current emails on device: <h3>
+        {% for mail in cemails %}
+            <p>{{ mail }}</p>
+        {% endfor %}
+    </div>
+    <hr>
+    <div>
+        <h3>Add new email</h3>
+        <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.emails.label (class="form_dev_config")}}<br>
+                {{ form.emails(size=20) }}
+            </p>
+            <p>{{ form.submit(class="butn") }}</p>
+        </form>
+    </div>
     <a class = "href_main_config" href="{{ url_for('config_page') }}">Main Configuration Page</a>
 
 {% endblock %}

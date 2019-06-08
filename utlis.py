@@ -1,5 +1,7 @@
 import json
 import subprocess
+from validate_email import validate_email
+from flask import flash
 
 config_path = 'config.json'
 
@@ -31,9 +33,13 @@ def udpate_emails_list(emails):
     for email in emails:
         email = email.strip()
         emails_list = get_config_value('recivers_emails')
-        if email not in emails_list:
+        if email not in emails_list and validate_email(email):
             emails_list.append(email)
             set_config_value('recivers_emails', emails_list)
+            flash(f'email {email} added')
+
+        else:
+            flash(f'invalid email: "{email}"')
 
 
 def wifi_connect(ssid, password):
