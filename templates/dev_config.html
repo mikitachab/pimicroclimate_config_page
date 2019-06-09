@@ -6,14 +6,17 @@
         {{ form.hidden_tag() }}
         <p>
             {{ form.measurements_count.label (class="form_dev_config")}}<br>
+            actual value: {{ context.measurements_count }}<br>
             {{ form.measurements_count(size=20) }}
         </p>
         <p>
             {{ form.measurement_interval.label (class="form_dev_config")}}<br>
+            actual value: {{ context.measurement_interval }}<br>
             {{ form.measurement_interval(size=20) }}
         </p>
         <p>
             {{ form.status_mail_time.label (class="form_dev_config") }}<br>
+            actual time: {{ context.status_mail_time }}<br>
             {{ form.status_mail_time(size=20) }}
         </p>
         <p>{{ form.submit(class="butn") }}</p>

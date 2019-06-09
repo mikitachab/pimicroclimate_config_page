@@ -47,7 +47,13 @@ def dev_config_page():
     else:
         for field, error in form.errors.items():
             flash(f'Troubles with field {getattr(form, field).label.text}: {" ".join(error)}')
-    return render_template('dev_config.html', title='dev-config', form=form)
+
+    context = {
+        'measurements_count': get_config_value('min_measurements_count'),
+        'measurement_interval': get_config_value('default_sleep_time'),
+        'status_mail_time': get_config_value('notification_time')
+    }
+    return render_template('dev_config.html', title='dev-config', form=form, context=context)
 
 
 @app.route('/mails', methods=['GET', 'POST'])
